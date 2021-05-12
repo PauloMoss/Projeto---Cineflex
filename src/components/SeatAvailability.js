@@ -2,19 +2,22 @@ import { useState } from 'react';
 
 
 export default function SeatAvailability(props) {
-    const { key, name, available } = props;
-    const [seatInfo, setSeatInfo] = useState((available) ? "seat available" : "seat unavailable")
+    const { orderDetail, order, setOrder } = props
+    const { id, name, isAvailable } = orderDetail;
+    const [seatInfo, setSeatInfo] = useState((isAvailable) ? "seat available" : "seat unavailable")
    
     function selectSeat() {
 
         if(seatInfo === "seat available") {
             setSeatInfo("seat selected")
+            setOrder({...order, ids: [...order.ids, id]})
         } else if(seatInfo === "seat selected") {
-            setSeatInfo("seat available")
+            setSeatInfo("seat available");
+            setOrder({...order, ids: order.ids.filter((i) => (i !== id))});
         }
     }
 
     return (
-        <div key={key} className={seatInfo} onClick={selectSeat}>{name}</div>
+        <div className={seatInfo} onClick={selectSeat}>{name}</div>
     );
 }

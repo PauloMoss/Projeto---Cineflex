@@ -13,9 +13,7 @@ export default function MovieAvaiability() {
    useEffect(() => {
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${idFilme}/showtimes`);
 		requisicao.then(resposta => setMovieDays(resposta.data.days));
-        console.log(movieDays)
-	}, []);
-    console.log(movieDays)
+	}, [idFilme]);
 
     if ( movieDays === []) {
         return "Carregando";
@@ -30,7 +28,7 @@ export default function MovieAvaiability() {
 
             <div className="sectionAvaiability" >
                 {movieDays.map(d => (
-                    <DaysAvailable daysDetails={d}/>
+                    <DaysAvailable daysDetails={d} key={d.id}/>
                 ))}
             </div>
             <Footer />
