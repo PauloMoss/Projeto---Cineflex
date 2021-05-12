@@ -125,7 +125,7 @@ button {
     font-size: 11px;
     margin: 0 3px;
 }
-.seat.selected {
+.selected {
     background: #8DD7CF;
     border: 1px solid #1AAE9E;
 }
