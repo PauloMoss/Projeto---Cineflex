@@ -5,15 +5,15 @@ import Header from './Header';
 
 export default function Home() {
 
-    const [movies, setMovies] = useState([]);
+    const [movieList, setMovieList] = useState([]);
 
     useEffect(() => {
 
 		const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies");
-		requisicao.then(resposta => setMovies(resposta.data));
+		requisicao.then(resposta => setMovieList(resposta.data));
 	}, []);
 
-    if ( movies === []) {
+    if ( movieList === []) {
         return "Carregando";
     }
 
@@ -25,7 +25,7 @@ export default function Home() {
             </div>
 
             <div className="movies">
-                {movies.map (m => (
+                {movieList.map (m => (
                     <Link to= {`/sessoes/${m.id}`} key={`${m.id}`}>
                         <div className="movie" >
                             <img src={m.posterURL} alt={m.title} />

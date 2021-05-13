@@ -1,13 +1,14 @@
 
 
 
-export default function Footer() {
+export default function Footer({title, image, weekday, name}) {
+    
     return (
         <div className="filmDetail">
             <div className="coverDetail">
-                <img src="Img/image 6.png" alt="filme-teste" />
+                <img src={image} alt={title} />
             </div>
-            <div className="orderDescription">Enola Holmes</div>
+            <div className="orderDescription">{title} <br/> {weekday} - {name}</div>
         </div>
     );
 }

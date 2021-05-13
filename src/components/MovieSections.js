@@ -1,42 +1,44 @@
-import { useParams } from 'react-router-dom';
-import { useEffect , useState} from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import Footer from './Footer';
 import SeatAvailability from './SeatAvailability';
 
 
-export default function MovieSections() {
+export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo }) {
 
     const {idSessao} = useParams();
-    const [movieInfo, setMovieInfo] = useState(null);
-    const [order, setOrder] = useState({name: "", cpf: "", ids: []})
+    let history = useHistory();
 
-
-    console.log(order)
    useEffect(() => {
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/showtimes/${idSessao}/seats`);
 		requisicao.then(resposta => setMovieInfo(resposta.data));
-	}, [idSessao]);
+	}, [idSessao, setMovieInfo]);
 
     if ( movieInfo === null) {
         return "Carregando";
     }
-    const { seats } = movieInfo;
+    const { seats, name } = movieInfo;
+    const { title, posterURL } = movieInfo.movie
+    const { weekday } = movieInfo.day
+    console.log(movieInfo)
 
     function sendOrder() {
-        if(order.name === "") {
+        let verify = true;
+        if(order.nomeComprador === "") {
             alert("Preencha o seu nome!");
-            return;
+            verify = false;
         } else if (order.cpf === "") {
             alert("Informe o seu CPF!");
-            return;
+            verify = false;
         } else if (order.ids === []) {
             alert("Escolha pelo menos 1 assento");
-            return;
-        } else {
+            verify = false;
+        } 
+        if(verify) {
             const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/seats/book-many`, order);
-		    request.then(console.log(order));
+		    request.then(history.push("/success"));
         }
     }
 
@@ -52,11 +54,35 @@ export default function MovieSections() {
                     <SeatAvailability orderDetail={a} order={order} setOrder={setOrder} key={a.id} name={a.name} available={a.isAvailable}/>
                 ))}
             </div>
-            <input placeholder="Digite seu nome" value={order.name} onChange={(e) => setOrder({...order, name: e.target.value})}/>
-            <input placeholder="Digite seu CPF" value={order.cpf} onChange={(e) => setOrder({...order, cpf: e.target.value})}/>
+            <div className="seatIdentification">
+                <div className="seatStatus">
+                    <div className="seat selected"></div>
+                    Selecionado
+                </div>
+                <div className="seatStatus">
+                    <div className="seat available"></div>
+                    Disponivel
+                </div>
+                <div className="seatStatus">
+                    <div className="seat unavailable"></div>
+                    Indisponivel
+                </div>
+            </div>
+
+            <div className="inputTitle">
+                Nome do comprador:
+                <input placeholder="Digite seu nome" value={order.nomeComprador} onChange={(e) => setOrder({...order, nomeComprador: e.target.value})}/>
+            </div>
+            
+            <div className="inputTitle">
+                Nome do comprador:
+                <input placeholder="Digite seu CPF" value={order.cpf} onChange={(e) => setOrder({...order, cpf: e.target.value})}/>
+            </div>
+            
 
             <button className="booking" onClick={sendOrder}>Reservar assento(s)</button>
-            <Footer />
+            
+            <Footer title={title} image={posterURL} weekday={weekday} name={name}/>
         </>
     );
 }

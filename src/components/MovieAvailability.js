@@ -8,14 +8,17 @@ import DaysAvailable from "./DaysAvailable";
 export default function MovieAvaiability() {
 
     const {idFilme} = useParams();
-    const [movieDays, setMovieDays] = useState([]);
+    const [movie, setMovie] = useState([]);
 
    useEffect(() => {
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${idFilme}/showtimes`);
-		requisicao.then(resposta => setMovieDays(resposta.data.days));
+		requisicao.then(resposta => setMovie(resposta.data));
 	}, [idFilme]);
 
-    if ( movieDays === []) {
+    
+    const { title, posterURL, days } = movie
+
+    if ( days === undefined) {
         return "Carregando";
     }
 
@@ -25,13 +28,14 @@ export default function MovieAvaiability() {
             <div className="designation">
                 Selecione o horário
             </div>
-
             <div className="sectionAvaiability" >
-                {movieDays.map(d => (
-                    <DaysAvailable daysDetails={d} key={d.id}/>
+                {days.map(d => (
+                    <DaysAvailable daysDetails={d} key={d.id} />
                 ))}
             </div>
-            <Footer />
+            
+            <Footer title={title} image={posterURL} weekday="" name="" />
         </>
     );
 }
+
