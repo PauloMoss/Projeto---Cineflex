@@ -1,4 +1,6 @@
-
+body {
+    font-family: 'Roboto', sans-serif;
+}
 .header {
     position: fixed;
     top: 0;
@@ -14,6 +16,13 @@
 h1 {
     color: #fff;
     font-size: 34px;
+}
+ion-icon {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    color: #fff;
+    font-size: 25px;
 }
 
 /** Home**/
@@ -71,6 +80,7 @@ h1 {
     background: #FFFFFF;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
+    margin: 0 20px;
 }
 .coverDetail img {
     width: 48px;
@@ -87,10 +97,15 @@ h1 {
 .sectionDay {
     color: #293845;
     font-size: 20px;
+    margin: 15px;
 }
 .sectionHour {
     display: flex;
     flex-wrap: wrap;
+    padding-left: 15px;
+}
+.sectionHour:last-child {
+    margin-bottom: 130px;
 }
 button {
     display: flex;
@@ -139,11 +154,12 @@ button {
 }
 .booking {
     margin: 9px auto;
+    margin-bottom: 130px;
 }
 .seatIdentification {
     display: flex;
     justify-content: space-evenly;
-    margin: 20px 0;
+    margin: 40px 0 60px 0;
 }
 .seatStatus {
     display: flex;

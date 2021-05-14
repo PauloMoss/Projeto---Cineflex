@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 
 export default function SeatAvailability(props) {
-    const { orderDetail, order, setOrder } = props
+    const { orderDetail, setOrder, order } = props
     const { id, name, isAvailable } = orderDetail;
     const [seatInfo, setSeatInfo] = useState((isAvailable) ? "seat available" : "seat unavailable")
    
@@ -13,7 +13,7 @@ export default function SeatAvailability(props) {
             setOrder({...order, ids: [...order.ids, id]})
         } else if(seatInfo === "seat selected") {
             setSeatInfo("seat available");
-            setOrder({...order, ids: order.ids.filter((i) => (i !== id))});
+            setOrder({...order, ids: order.ids.filter(i => (i !== id))})
         }
     }
 

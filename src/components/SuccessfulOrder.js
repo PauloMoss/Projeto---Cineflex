@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 
-export default function SuccessfulOrder({ order, setOrder, movieInfo, setMovieInfo }) {
+export default function SuccessfulOrder({ order, setOrder, movieInfo }) {
     
     const { movie, day, name, seats } = movieInfo;
     const { nomeComprador, cpf, ids } = order
     const seatName = ids.map(i => seats.find(j => j.id === i))
-    console.log(seatName)
+
     return (
         <>
             <div className="designation succssesfully">
@@ -26,7 +26,7 @@ export default function SuccessfulOrder({ order, setOrder, movieInfo, setMovieIn
                 <div className="description">{cpf}</div>
             </div>
 
-            <Link to="/"><button className="booking" onClick={() => setOrder({nomeComprador: "", cpf: "", ids: []})}>Voltar pra Home</button></Link>
+            <Link to="/"><button className="booking" onClick={() => setOrder({compradores: [], ids: []})}>Voltar pra Home</button></Link>
         </>
     );
 }

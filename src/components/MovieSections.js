@@ -1,7 +1,9 @@
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Header from './Header';
+
+import SendOrder from './AuxiliaryFunctions/SendOrder';
+import InputInfo from './AuxiliaryFunctions/InputInfo';
 import Footer from './Footer';
 import SeatAvailability from './SeatAvailability';
 
@@ -9,7 +11,6 @@ import SeatAvailability from './SeatAvailability';
 export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo }) {
 
     const {idSessao} = useParams();
-    let history = useHistory();
 
    useEffect(() => {
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/showtimes/${idSessao}/seats`);
@@ -22,29 +23,9 @@ export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo
     const { seats, name } = movieInfo;
     const { title, posterURL } = movieInfo.movie
     const { weekday } = movieInfo.day
-    console.log(movieInfo)
-
-    function sendOrder() {
-        let verify = true;
-        if(order.nomeComprador === "") {
-            alert("Preencha o seu nome!");
-            verify = false;
-        } else if (order.cpf === "") {
-            alert("Informe o seu CPF!");
-            verify = false;
-        } else if (order.ids === []) {
-            alert("Escolha pelo menos 1 assento");
-            verify = false;
-        } 
-        if(verify) {
-            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/seats/book-many`, order);
-		    request.then(history.push("/success"));
-        }
-    }
 
     return (
         <>
-             <Header />
             <div className="designation">
                 Selecione o(s) assento(s)
             </div>
@@ -68,22 +49,13 @@ export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo
                     Indisponivel
                 </div>
             </div>
-
-            <div className="inputTitle">
-                Nome do comprador:
-                <input placeholder="Digite seu nome" value={order.nomeComprador} onChange={(e) => setOrder({...order, nomeComprador: e.target.value})}/>
-            </div>
             
-            <div className="inputTitle">
-                Nome do comprador:
-                <input placeholder="Digite seu CPF" value={order.cpf} onChange={(e) => setOrder({...order, cpf: e.target.value})}/>
-            </div>
-            
-
-            <button className="booking" onClick={sendOrder}>Reservar assento(s)</button>
+            {order.ids.map((item, i) => (
+                <InputInfo  id={item} index={i} order={order} setOrder={setOrder} />
+            ))}
+            <button className="booking" onClick={() => SendOrder(order)}>Reservar assento(s)</button>
             
             <Footer title={title} image={posterURL} weekday={weekday} name={name}/>
         </>
     );
 }
-

@@ -1,19 +1,21 @@
 import { useParams } from 'react-router-dom';
 import { useEffect , useState} from 'react';
 import axios from 'axios';
-import Header from './Header';
 import Footer from './Footer';
 import DaysAvailable from "./DaysAvailable";
 
-export default function MovieAvaiability() {
+export default function MovieAvaiability({ setIsHomePage }) {
+
+    
 
     const {idFilme} = useParams();
     const [movie, setMovie] = useState([]);
 
    useEffect(() => {
+        setIsHomePage(false)
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${idFilme}/showtimes`);
 		requisicao.then(resposta => setMovie(resposta.data));
-	}, [idFilme]);
+	}, [idFilme, setIsHomePage]);
 
     
     const { title, posterURL, days } = movie
@@ -24,7 +26,6 @@ export default function MovieAvaiability() {
 
     return (
         <>
-            <Header />
             <div className="designation">
                 Selecione o horário
             </div>
