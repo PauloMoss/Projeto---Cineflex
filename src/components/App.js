@@ -12,7 +12,6 @@ export default function App() {
     const [isHomePage, setIsHomePage] = useState(true)
     const [movieInfo, setMovieInfo] = useState(null);
     const [order, setOrder] = useState({compradores: [], ids: []})
-    console.log(order)
     
     return (
         <Router>

@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 import { useEffect , useState} from 'react';
 import axios from 'axios';
 
-
 export default function Home({ setIsHomePage }) {
 
-    
     const [movieList, setMovieList] = useState([]);
 
     useEffect(() => {
@@ -23,7 +21,6 @@ export default function Home({ setIsHomePage }) {
             <div className="designation">
                 Selecione um filme
             </div>
-
             <div className="movies">
                 {movieList.map (m => (
                     <Link to= {`/sessoes/${m.id}`} key={`${m.id}`}>

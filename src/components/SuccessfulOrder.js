@@ -11,7 +11,6 @@ export default function SuccessfulOrder({ order, setOrder, movieInfo }) {
             <div className="designation succssesfully">
                 Pedido feito com sucesso!
             </div>
-
             <div className="info" >
                 <div className="title">Filme e sessão</div>
                 <div className="description">{movie.title} <br />{day.date} {name}</div>
@@ -27,7 +26,7 @@ export default function SuccessfulOrder({ order, setOrder, movieInfo }) {
                         <div key={i+100} className="description">Nome: {c.name}</div>
                         <div key={i+200} className="description">CPF: {c.cpf}</div>
                     </>
-                    ))}
+                ))}
             </div>
 
             <Link to="/"><button className="backHome" onClick={() => setOrder({compradores: [], ids: []})}>Voltar pra Home</button></Link>

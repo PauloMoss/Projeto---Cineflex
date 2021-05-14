@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 export default function SendOrder(order, history) {
@@ -25,5 +24,3 @@ export default function SendOrder(order, history) {
         request.then(history.push("/success"));
     }
 }
-
-//

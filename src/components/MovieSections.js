@@ -31,7 +31,6 @@ export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo
             <div className="designation">
                 Selecione o(s) assento(s)
             </div>
-
             <div className="seats" >
                 {seats.map(a => (
                     <SeatAvailability orderDetail={a} order={order} setOrder={setOrder} key={a.id} name={a.name} available={a.isAvailable}/>
