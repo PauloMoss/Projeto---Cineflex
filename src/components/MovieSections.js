@@ -1,16 +1,18 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 
 import SendOrder from './AuxiliaryFunctions/SendOrder';
 import InputInfo from './AuxiliaryFunctions/InputInfo';
 import Footer from './Footer';
-import SeatAvailability from './SeatAvailability';
+import SeatAvailability from './AuxiliaryFunctions/SeatAvailability';
+import SeatSubtitles from './AuxiliaryFunctions/SeatSubtitles';
 
 
 export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo }) {
 
     const {idSessao} = useParams();
+    const history = useHistory();
 
    useEffect(() => {
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/showtimes/${idSessao}/seats`);
@@ -35,25 +37,12 @@ export default function MovieSections({ order, setOrder, movieInfo, setMovieInfo
                     <SeatAvailability orderDetail={a} order={order} setOrder={setOrder} key={a.id} name={a.name} available={a.isAvailable}/>
                 ))}
             </div>
-            <div className="seatIdentification">
-                <div className="seatStatus">
-                    <div className="seat selected"></div>
-                    Selecionado
-                </div>
-                <div className="seatStatus">
-                    <div className="seat available"></div>
-                    Disponivel
-                </div>
-                <div className="seatStatus">
-                    <div className="seat unavailable"></div>
-                    Indisponivel
-                </div>
-            </div>
+            <SeatSubtitles />
             
             {order.ids.map((item, i) => (
-                <InputInfo  id={item} index={i} order={order} setOrder={setOrder} />
+                <InputInfo  key={i} id={item} index={i} order={order} setOrder={setOrder} />
             ))}
-            <button className="booking" onClick={() => SendOrder(order)}>Reservar assento(s)</button>
+            <button className="booking" onClick={() => SendOrder(order, history)}>Reservar assento(s)</button>
             
             <Footer title={title} image={posterURL} weekday={weekday} name={name}/>
         </>

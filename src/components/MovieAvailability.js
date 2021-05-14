@@ -2,11 +2,9 @@ import { useParams } from 'react-router-dom';
 import { useEffect , useState} from 'react';
 import axios from 'axios';
 import Footer from './Footer';
-import DaysAvailable from "./DaysAvailable";
+import DaysAvailable from "./AuxiliaryFunctions/DaysAvailable";
 
 export default function MovieAvaiability({ setIsHomePage }) {
-
-    
 
     const {idFilme} = useParams();
     const [movie, setMovie] = useState([]);
@@ -16,7 +14,6 @@ export default function MovieAvaiability({ setIsHomePage }) {
 		const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${idFilme}/showtimes`);
 		requisicao.then(resposta => setMovie(resposta.data));
 	}, [idFilme, setIsHomePage]);
-
     
     const { title, posterURL, days } = movie
 
@@ -34,7 +31,6 @@ export default function MovieAvaiability({ setIsHomePage }) {
                     <DaysAvailable daysDetails={d} key={d.id} />
                 ))}
             </div>
-            
             <Footer title={title} image={posterURL} weekday="" name="" />
         </>
     );

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 export default function SuccessfulOrder({ order, setOrder, movieInfo }) {
     
     const { movie, day, name, seats } = movieInfo;
-    const { nomeComprador, cpf, ids } = order
+    const { compradores, ids } = order
     const seatName = ids.map(i => seats.find(j => j.id === i))
 
     return (
@@ -18,15 +18,19 @@ export default function SuccessfulOrder({ order, setOrder, movieInfo }) {
             </div>
             <div className="info" >
                 <div className="title">Ingressos</div>
-                {seatName.map(i => <div className="description">assento {i.name}</div>)}
+                {seatName.map((s,i) => <div key={i} className="description">assento {s.name}</div>)}
             </div>
             <div className="info" >
-                <div className="title">Comprador</div>
-                <div className="description">{nomeComprador}</div>
-                <div className="description">{cpf}</div>
+                {compradores.map((c,i) => (
+                    <>
+                        <div key={i} className="title">Comprador {i+1}</div>
+                        <div key={i+100} className="description">Nome: {c.name}</div>
+                        <div key={i+200} className="description">CPF: {c.cpf}</div>
+                    </>
+                    ))}
             </div>
 
-            <Link to="/"><button className="booking" onClick={() => setOrder({compradores: [], ids: []})}>Voltar pra Home</button></Link>
+            <Link to="/"><button className="backHome" onClick={() => setOrder({compradores: [], ids: []})}>Voltar pra Home</button></Link>
         </>
     );
 }

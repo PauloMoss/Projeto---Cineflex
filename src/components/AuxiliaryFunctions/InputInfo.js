@@ -36,12 +36,3 @@ function input(title, value, ChangeFunction, placeholder, objKey) {
             </div>
     );
 }
-
-/*{input('Nome do comprador:', name, handleOnChange, "Digite seu nome", "name")}
-            {input('Cpf do comprador:', cpf, handleOnChange, "Digite seu cpf", "cpf")}
-            
-            <div className="inputTitle">
-                Nome do comprador:
-                <input placeholder="Digite seu nome" value={name} onChange={(e) => handleOnChange(e, "name")}/>
-            </div>
-            */

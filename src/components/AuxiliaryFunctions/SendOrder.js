@@ -1,10 +1,9 @@
-import { useHistory } from 'react-router-dom';
+
 import axios from 'axios';
 
-export default function SendOrder(order) {
+export default function SendOrder(order, history) {
     
     const { compradores, ids } = order
-    const history = useHistory();
     let verify = true;
 
     compradores.forEach(c => {
@@ -27,10 +26,4 @@ export default function SendOrder(order) {
     }
 }
 
-/*const { compradores, ids } = order
-
- const history = useHistory();
-
-    //history.push("/success")
-
-    */
+//
